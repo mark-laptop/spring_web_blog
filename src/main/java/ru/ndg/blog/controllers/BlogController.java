@@ -68,12 +68,13 @@ public class BlogController {
 
     @PostMapping("/blog/{id}/edit")
     // or @ModelAttribute
-    public String blogPostUpdate(@RequestParam String title, @RequestParam String anons, @RequestParam String fullText, @PathVariable(name = "id") Long id) {
+    public String blogPostUpdate(@RequestParam String title, @RequestParam String anons, @RequestParam String fullText, @PathVariable(name = "id") Long id, Model model) {
         Post post = postService.findPostById(id);
         post.setTitle(title);
         post.setAnons(anons);
         post.setFullText(fullText);
         postService.saveOrUpdatePost(post);
+        model.addAttribute("editablePost", true);
         return "redirect:/blog";
     }
 
